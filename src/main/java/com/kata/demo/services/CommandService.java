@@ -71,7 +71,7 @@ public class CommandService implements ICommandService {
             throw  new CommandAnnulationException("you can't cancel commande after one hour");
         }
 
-        if (command.getStatut() == Command.Statut.ANNULEE) {
+        if (command.getStatut().equals(Command.Statut.ANNULEE)) {
             throw new RuntimeException("Order Cancelled.");
         }
 
@@ -86,11 +86,11 @@ public class CommandService implements ICommandService {
         Command command = commandRepository.findById(commandId)
                 .orElseThrow(() -> new RuntimeException("order not Found"));
 
-        if (command.getStatut() == Command.Statut.ANNULEE) {
+        if (command.getStatut().equals(Command.Statut.ANNULEE)) {
             throw new RuntimeException("order cancelled.");
         }
 
-        if (command.getStatut() != Command.Statut.EN_ATTENTE) {
+        if (!command.getStatut().equals(Command.Statut.EN_ATTENTE)) {
             throw new RuntimeException("order already validated.");
         }
         // check if there are products out of stock and raise an exception
